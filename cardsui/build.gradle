@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:0.6.3"
+    }
+}
+
+group "com.fima"
+version "1.0"
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+apply plugin: "android-library"
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "18.1.0"
+
+    defaultConfig {
+        versionName "1.0"
+        versionCode 1
+        minSdkVersion 8
+        targetSdkVersion 18
+    }
+}
+
+dependencies {
+    compile "com.nineoldandroids:library:2.4.0"
+}
+
+apply plugin: "maven-publish"
+ 
+android.libraryVariants
+publishing {
+    publications {
+        androidLibrary(MavenPublication) {
+            artifact 'build/libs/' + project.name + '-' + project.version + '.aar'
+        }
+    }
+}
