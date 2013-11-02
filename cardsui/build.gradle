@@ -41,7 +41,16 @@ android.libraryVariants
 publishing {
     publications {
         androidLibrary(MavenPublication) {
-            artifact 'build/libs/' + project.name + '-' + project.version + '.aar'
+            artifact "build/libs/" + project.name + "-" + project.version + ".aar"
+            pom.withXml {
+                nodeDependencies = asNode().appendNode("dependencies") 
+                project.configurations.default.allDependencies.each { dep ->
+                    nodeDependency = nodeDependencies.appendNode("dependency")
+                    nodeDependency.appendNode("groupId", dep.group)
+                    nodeDependency.appendNode("artifactId", dep.name)
+                    nodeDependency.appendNode("version", dep.version)
+                }
+            }
         }
     }
 }
